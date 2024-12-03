@@ -1,0 +1,51 @@
+name: $(Date:yyyy-MM-dd)$(Rev:.r)_$(Build.BuildId)_$(Build.DefinitionName)_$(SourceBranchName)
+
+trigger:
+  branches:
+    include:
+      - master
+     
+pool:
+  vmImage: ubuntu-latest
+
+# variables:
+#   - group: azure-webapp-deployment-token
+
+steps:
+# - task: NodeTool@0
+#   displayName: 'Use Node 20.x'
+#   inputs:
+#     versionSpec: 20.x
+
+# - task: Npm@1
+#   displayName: 'NPM Install'
+#   inputs:
+#     workingDir: '$(System.DefaultWorkingDirectory)'
+#     verbose: false
+
+# - task: Npm@1
+#   displayName: 'NPM Build'
+#   inputs:
+#     command: custom
+#     workingDir: '$(System.DefaultWorkingDirectory)'
+#     verbose: false
+#     customCommand: 'run build'
+
+# # Additional step to ensure the dist folder is created
+# - script: |
+#     ls -la dist
+#   displayName: 'List dist Directory'
+
+# - task: PublishBuildArtifacts@1
+#   inputs:
+#     PathtoPublish: 'dist'
+#     ArtifactName: 'app'
+
+
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: ''
+    verbose: true
+  env:
+    azure_static_web_apps_api_token: '$(deployment_token)'
